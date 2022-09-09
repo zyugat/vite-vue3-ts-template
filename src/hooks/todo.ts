@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+
 export default function useTodo(initValue = false) {
   const loading = ref(initValue)
   const setLoading = (value: boolean) => {
@@ -7,6 +8,7 @@ export default function useTodo(initValue = false) {
   const toggle = () => {
     loading.value = !loading.value
   }
+
   return {
     loading,
     setLoading,

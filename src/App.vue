@@ -1,25 +1,20 @@
 <template>
   <div class="app">
-    <!-- <todo-list :todo-list="todoList" /> -->
-    <!-- <todo-list /> -->
+    <todo-list :todo-list="todoStore.$state.TodoList" />
 
     <router-link to="/hello" class="link-a">hello</router-link>
     <router-link to="/word" class="link-a">word</router-link>
 
-    {{ todoStore }}
-
+    {{ todoStore.$state }}
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
-// import { defineComponent } from 'vue'
-// import TodoList from 'components/todo/index.vue'
+import TodoList from 'components/todo/index.vue'
 import { useTodoStore } from '@/store/modules/todo'
 
 const todoStore = useTodoStore()
-
-console.log(todoStore.$state)
 </script>
 
 <style lang="scss">
