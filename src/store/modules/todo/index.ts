@@ -1,14 +1,27 @@
 import { defineStore } from 'pinia'
 import piniaStore from '@/store/index'
+import { TodoState } from './types'
 
 export const useTodoStore = defineStore('app', {
-  state: () => ({
+  state: (): TodoState => ({
     title: 'Todo List Title',
-    h1: 'Todo List h1',
-    theme: '',
+    TodoList: [],
   }),
-  getters: {},
-  actions: {},
+  getters: {
+    getTodo(state: TodoState): TodoState {
+      return { ...state }
+    },
+  },
+  actions: {
+    // 设置
+    setTodo(partial: Partial<TodoState>) {
+      this.$patch(partial)
+    },
+    // 重置
+    resetTodo() {
+      this.$reset()
+    },
+  },
 })
 
 export function useTodoOutsideStore() {
