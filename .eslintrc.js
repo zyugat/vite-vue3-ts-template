@@ -67,6 +67,8 @@ module.exports = {
     semi: ['warn', 'never'],
 
     'vue/multi-word-component-names': 'off',
+
+    'prettier/prettier': 'error',
   },
   globals: {
     defineProps: 'readonly',

@@ -1,10 +1,15 @@
+import type { RouteRecordRaw } from 'vue-router'
 export default [
   {
-    path: '/hello',
-    component: () => import('@/views/hello/index.vue'),
+    path: '/',
+    component: () => import('@/views/Home/index.vue'),
   },
   {
-    path: '/word',
-    component: () => import('@/views/word/index.vue'),
+    path: '/demo',
+    component: () => import('@/views/demo/index.vue'),
   },
-]
+  {
+    path: '/todolist',
+    component: () => import('@/views/TodoList/index.vue'),
+  },
+] as RouteRecordRaw[]

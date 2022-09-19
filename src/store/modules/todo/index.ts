@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import piniaStore from '@/store/index'
-import { TodoState, ITodo, TODO_STATUS } from './types'
+import { TODO_STATUS } from './types'
+import type { TodoState, ITodo } from './types'
 
-export const useTodoStore = defineStore('app', {
+export const useTodoStore = defineStore('todo', {
   state: (): TodoState => ({
     title: 'Todo List Title',
-    TodoList: [],
+    TodoList: [] as ITodo[],
   }),
   getters: {
     getTodo(state: TodoState): TodoState {
@@ -22,10 +23,7 @@ export const useTodoStore = defineStore('app', {
     //   this.$reset()
     // },
 
-    INIT_TODO_LIST(todoList: ITodo[]): void {
-      this.TodoList = todoList
-    },
-    ADD_TODO_ITEM(todoContent: string): void {
+    addTodoItem(todoContent: string): void {
       const todo: ITodo = {
         id: new Date().getTime(),
         content: todoContent,
@@ -33,13 +31,7 @@ export const useTodoStore = defineStore('app', {
       }
       this.TodoList.unshift(todo)
     },
-    CHANGE_TODO_ITEM(
-      state: TodoState,
-      todo: {
-        id: number
-        content: string
-      },
-    ): void {
+    changeTodoItem(todo: { id: number; content: string }): void {
       this.TodoList = this.TodoList.map((item: ITodo) => {
         if (item.id === todo.id) {
           item.content = todo.content
@@ -47,19 +39,20 @@ export const useTodoStore = defineStore('app', {
         return item
       })
     },
-    REMOVE_TODO(id: number): void {
+    removeTodoItem(id: number): void {
       this.TodoList = this.TodoList.filter((item: ITodo) => item.id !== id)
     },
-    SET_TODO_STATUS(id: number): void {
+    setTodoStatus(id: number): void {
       this.TodoList = this.TodoList.map((item: ITodo) => {
         if (item.id === id) {
-          item.status = item.status === TODO_STATUS.FINISHED ? TODO_STATUS.WILL : TODO_STATUS.FINISHED
+          item.status =
+            item.status === TODO_STATUS.FINISHED ? TODO_STATUS.WILL : TODO_STATUS.FINISHED
         }
         return item
       })
     },
     // 确保只存在一个<正在完成>
-    SET_DOING_STATUS(id: number): void {
+    setDoingStatus(id: number): void {
       this.TodoList = this.TodoList.map((item: ITodo) => {
         if (item.id !== id) {
           if (item.status === TODO_STATUS.DOING) {
@@ -73,6 +66,12 @@ export const useTodoStore = defineStore('app', {
       })
     },
   },
+  persist: true,
+  // persist: {
+  //   // storage: sessionStorage,
+  //   storage: localStorage,
+  //   paths: ['TodoList'],
+  // },
 })
 
 export function useTodoOutsideStore() {

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useTodoStore } from '@/store/modules/todo'
 
 // 保存输入框的值
 const todoValue = ref<string>('')
-const { ADD_TODO_ITEM } = useTodoStore()
+
+const emit = defineEmits(['addTodo'])
 
 const addTodoValue = (): void => {
   // 判断是否为空
   if (todoValue.value.trim().length) {
-    ADD_TODO_ITEM(todoValue.value)
+    emit('addTodo', todoValue.value)
     todoValue.value = ''
   }
 }

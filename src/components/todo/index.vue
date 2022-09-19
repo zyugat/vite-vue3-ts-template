@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { PropType, onMounted } from 'vue'
-import { Store, useStore } from 'vuex'
-import { useTodoStore } from '@/store/modules/todo'
+import { useTodoStore } from '@/store'
 import { ITodo } from '@/store/modules/todo/types'
 
 import TodoItem from 'components/todo/TodoItem.vue'
@@ -9,31 +7,30 @@ import TodoInput from 'components/todo/TodoInput.vue'
 
 const props = defineProps({
   todoList: {
-    type: Array as PropType<ITodo[]>,
+    type: Array<ITodo>,
     required: true,
   },
 })
-// 向 TodoItem组件 传递方法,用来对状态的操作
-const { REMOVE_TODO, CHANGE_TODO_ITEM, SET_TODO_STATUS, SET_DOING_STATUS } = useTodoStore()
-defineExpose({ REMOVE_TODO, CHANGE_TODO_ITEM, SET_TODO_STATUS, SET_DOING_STATUS })
 
-// 初始化列表
-const store = useTodoStore()
+// 向 TodoItem组件 传递方法,用来对状态的操作
+const { setDoingStatus, setTodoStatus, removeTodoItem, changeTodoItem, addTodoItem } =
+  useTodoStore()
+defineExpose({ setDoingStatus, setTodoStatus, removeTodoItem, changeTodoItem, addTodoItem })
 </script>
 
 <template>
   <div class="wrapper">
     点击文字可修改内容。
-    <todo-input class="todo-input" />
+    <todo-input class="todo-input" @add-todo="addTodoItem" />
     <todo-item
       v-for="item of todoList"
       :key="item.id"
       class="todo-item"
       :item="item"
-      @change-todo-item="CHANGE_TODO_ITEM"
-      @remove-todo="REMOVE_TODO"
-      @set-status="SET_TODO_STATUS"
-      @set-doing="SET_DOING_STATUS"
+      @change-todo-item="changeTodoItem"
+      @remove-todo="removeTodoItem"
+      @set-status="setTodoStatus"
+      @set-doing="setDoingStatus"
     />
   </div>
 </template>

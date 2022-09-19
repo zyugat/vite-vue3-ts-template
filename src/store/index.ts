@@ -1,10 +1,10 @@
 import { createPinia } from 'pinia'
-import { useTodoStore } from './modules/todo'
-
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-export { useTodoStore }
+import { useTodoStore } from './modules/todo'
+import { useMainStore } from './modules/main'
+
+export { useTodoStore, useMainStore }
 export default pinia

@@ -1,18 +1,6 @@
 <script setup lang="ts">
-import { PropType, ref, watch } from 'vue'
-import { ITodo, TODO_STATUS } from '@/store/modules/todo/types'
-
-interface IStatusState {
-  DOING: TODO_STATUS
-  FINISHED: TODO_STATUS
-  WILL: TODO_STATUS
-}
-
-const statusState = {
-  DOING: TODO_STATUS.DOING,
-  FINISHED: TODO_STATUS.FINISHED,
-  WILL: TODO_STATUS.WILL,
-} as IStatusState
+import { PropType, ref } from 'vue'
+import { ITodo } from '@/store/modules/todo/types'
 
 const props = defineProps({
   item: {
@@ -23,6 +11,7 @@ const props = defineProps({
 
 // 移除,设置状态
 const emit = defineEmits(['removeTodo', 'setStatus', 'setDoing', 'changeTodoItem'])
+
 const removeTodo = (id: number): void => {
   emit('removeTodo', id)
 }
@@ -36,7 +25,7 @@ const setDoing = (id: number): void => {
 // 修改数据
 const changeStatus = ref<boolean>(false)
 const changeItemContent = ref<string>('')
-const changeConnent = (id: number, content: string) => {
+const changeContent = (id: number, content: string) => {
   if (changeItemContent.value !== content) {
     emit('changeTodoItem', { id, content: changeItemContent.value })
   }
@@ -47,29 +36,29 @@ const changeConnent = (id: number, content: string) => {
 <template>
   <div class="todo-item">
     <div class="status-input">
-      <input type="checkbox" :checked="item.status === statusState.FINISHED" @click="setStatus(item.id)" />
+      <input type="checkbox" :checked="item.status === 'finished'" @click="setStatus(item.id)" />
     </div>
     <div
       v-if="changeStatus === false"
       class="text-connect"
       @click=";(changeStatus = true), (changeItemContent = item.content)"
     >
-      <span :class="item.status === statusState.FINISHED ? 'line-through' : ''">
+      <span :class="item.status === 'finished' ? 'line-through' : ''">
         {{ item.content }}
       </span>
     </div>
     <div v-else class="change-status">
       <input v-model="changeItemContent" type="text" />
-      <button @click="changeConnent(item.id, item.content)">修改</button>
+      <button @click="changeContent(item.id, item.content)">修改</button>
     </div>
     <div class="status-action">
       <button @click="removeTodo(item.id)">删除</button>
       <button
-        v-if="item.status !== statusState.FINISHED"
-        :class="item.status === statusState.DOING ? 'doing' : 'willdo'"
+        v-if="item.status !== 'finished'"
+        :class="item.status === 'doing' ? 'doing' : 'will'"
         @click="setDoing(item.id)"
       >
-        {{ item.status === statusState.DOING ? '正在做...' : '马上做' }}
+        {{ item.status === 'doing' ? '正在做...' : '马上做' }}
       </button>
     </div>
   </div>

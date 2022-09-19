@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 
-export default function useTodo(initValue = false) {
+export default function useUser(initValue = false) {
   const loading = ref(initValue)
   const setLoading = (value: boolean) => {
     loading.value = value

@@ -1,5 +1,5 @@
 export interface TodoState {
-  title: 'Todo List Title'
+  title: string
   TodoList: ITodo[]
 }
 
