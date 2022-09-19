@@ -23,4 +23,4 @@
 
 
 
-![image-20220919211440098](C:\Users\zyugat\AppData\Roaming\Typora\typora-user-images\image-20220919211440098.png)
+![image-20220919211440098](https://img.zyugat.com/zyuimg/2022-09-19_331d350c7219d.png)
