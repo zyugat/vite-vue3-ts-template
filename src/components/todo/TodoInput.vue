@@ -1,3 +1,10 @@
+<template>
+  <div class="todo-input">
+    <input v-model="todoValue" type="text" @keyup.enter="addTodoValue" />
+    <button @click="addTodoValue">确认</button>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -14,13 +21,6 @@ const addTodoValue = (): void => {
   }
 }
 </script>
-
-<template>
-  <div class="todo-input">
-    <input v-model="todoValue" type="text" @keyup.enter="addTodoValue" />
-    <button @click="addTodoValue">确认</button>
-  </div>
-</template>
 
 <style lang="scss">
 .todo-input {

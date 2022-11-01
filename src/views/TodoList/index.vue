@@ -1,3 +1,9 @@
+<template>
+  <div>
+    <todo-list :todo-list="todoStore.$state.TodoList" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import TodoList from 'components/todo/index.vue'
 import { useTodoStore } from '@/store'
@@ -15,11 +21,5 @@ todoStore.$subscribe((mutation, state) => {
   console.log(mutation.type, mutation.storeId, mutation.events)
 })
 </script>
-
-<template>
-  <div>
-    <todo-list :todo-list="todoStore.$state.TodoList" />
-  </div>
-</template>
 
 <style scoped lang="scss"></style>

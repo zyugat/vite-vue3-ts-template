@@ -1,3 +1,20 @@
+<template>
+  <div class="wrapper">
+    点击文字可修改内容。
+    <todo-input class="todo-input" @add-todo="addTodoItem" />
+    <todo-item
+      v-for="item of todoList"
+      :key="item.id"
+      class="todo-item"
+      :item="item"
+      @change-todo-item="changeTodoItem"
+      @remove-todo="removeTodoItem"
+      @set-status="setTodoStatus"
+      @set-doing="setDoingStatus"
+    />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { useTodoStore } from '@/store'
 import { ITodo } from '@/store/modules/todo/types'
@@ -17,23 +34,6 @@ const { setDoingStatus, setTodoStatus, removeTodoItem, changeTodoItem, addTodoIt
   useTodoStore()
 defineExpose({ setDoingStatus, setTodoStatus, removeTodoItem, changeTodoItem, addTodoItem })
 </script>
-
-<template>
-  <div class="wrapper">
-    点击文字可修改内容。
-    <todo-input class="todo-input" @add-todo="addTodoItem" />
-    <todo-item
-      v-for="item of todoList"
-      :key="item.id"
-      class="todo-item"
-      :item="item"
-      @change-todo-item="changeTodoItem"
-      @remove-todo="removeTodoItem"
-      @set-status="setTodoStatus"
-      @set-doing="setDoingStatus"
-    />
-  </div>
-</template>
 
 <style lang="scss">
 .wrapper {

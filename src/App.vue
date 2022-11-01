@@ -1,3 +1,25 @@
+<template>
+  <div class="app">
+    <div class="router">
+      <div class="content">
+        <div class="router-list">
+          <router-link v-for="item in routerList" :key="item.url" :to="item.url" class="link-a">
+            {{ item.name }}
+          </router-link>
+        </div>
+
+        <div class="router-content">
+          <router-view v-slot="{ Component }">
+            <transition :name="routerTransition">
+              <component :is="Component"></component>
+            </transition>
+          </router-view>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
@@ -36,28 +58,6 @@ router.beforeEach((to, from, next) => {
   next()
 })
 </script>
-
-<template>
-  <div class="app">
-    <div class="router">
-      <div class="content">
-        <div class="router-list">
-          <router-link v-for="item in routerList" :key="item.url" :to="item.url" class="link-a">
-            {{ item.name }}
-          </router-link>
-        </div>
-
-        <div class="router-content">
-          <router-view v-slot="{ Component }">
-            <transition :name="routerTransition">
-              <component :is="Component"></component>
-            </transition>
-          </router-view>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 .app {

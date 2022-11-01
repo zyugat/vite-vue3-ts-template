@@ -1,3 +1,34 @@
+<template>
+  <div class="todo-item">
+    <div class="status-input">
+      <input type="checkbox" :checked="item.status === 'finished'" @click="setStatus(item.id)" />
+    </div>
+    <div
+      v-if="changeStatus === false"
+      class="text-connect"
+      @click=";(changeStatus = true), (changeItemContent = item.content)"
+    >
+      <span :class="item.status === 'finished' ? 'line-through' : ''">
+        {{ item.content }}
+      </span>
+    </div>
+    <div v-else class="change-status">
+      <input v-model="changeItemContent" type="text" />
+      <button @click="changeContent(item.id, item.content)">修改</button>
+    </div>
+    <div class="status-action">
+      <button @click="removeTodo(item.id)">删除</button>
+      <button
+        v-if="item.status !== 'finished'"
+        :class="item.status === 'doing' ? 'doing' : 'will'"
+        @click="setDoing(item.id)"
+      >
+        {{ item.status === 'doing' ? '正在做...' : '马上做' }}
+      </button>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { PropType, ref } from 'vue'
 import { ITodo } from '@/store/modules/todo/types'
@@ -32,37 +63,6 @@ const changeContent = (id: number, content: string) => {
   changeStatus.value = false
 }
 </script>
-
-<template>
-  <div class="todo-item">
-    <div class="status-input">
-      <input type="checkbox" :checked="item.status === 'finished'" @click="setStatus(item.id)" />
-    </div>
-    <div
-      v-if="changeStatus === false"
-      class="text-connect"
-      @click=";(changeStatus = true), (changeItemContent = item.content)"
-    >
-      <span :class="item.status === 'finished' ? 'line-through' : ''">
-        {{ item.content }}
-      </span>
-    </div>
-    <div v-else class="change-status">
-      <input v-model="changeItemContent" type="text" />
-      <button @click="changeContent(item.id, item.content)">修改</button>
-    </div>
-    <div class="status-action">
-      <button @click="removeTodo(item.id)">删除</button>
-      <button
-        v-if="item.status !== 'finished'"
-        :class="item.status === 'doing' ? 'doing' : 'will'"
-        @click="setDoing(item.id)"
-      >
-        {{ item.status === 'doing' ? '正在做...' : '马上做' }}
-      </button>
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 .todo-item {
