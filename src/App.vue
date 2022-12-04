@@ -42,11 +42,17 @@ const routerList = reactive([
     url: '/demo',
     name: 'Demo',
   },
+  {
+    url: '/RouterTemplate',
+    name: 'RouterTemplate',
+  },
 ])
 
 router.beforeEach((to, from, next) => {
   let toIndex = routerList.findIndex(item => item.url === to.path)
   let fromIndex = routerList.findIndex(item => item.url === from.path)
+
+
 
   // 在下面 css 那有相关解释. 想看自行跳转.
   if (toIndex > fromIndex) {
